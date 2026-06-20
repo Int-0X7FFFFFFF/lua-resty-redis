@@ -15,8 +15,9 @@ __DATA__
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, failure_mode = "error"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, failure_mode = "error"})
         mgr:connect()
         ngx.say("initial state: " .. mgr:get_state())
 
@@ -70,6 +71,7 @@ connect() failed
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
         -- First try bad port
         local mgr = redis_mux.new({
@@ -80,7 +82,7 @@ connect() failed
         mgr:connect()
 
         -- Change to good port and reconnect
-        mgr:set_option("host", "127.0.0.1")
+        mgr:set_option("host", redis_host)
         mgr:set_option("port", redis_port)
         local ok, err = mgr:connect()
         ngx.say("reconnect ok: " .. tostring(ok))
@@ -108,8 +110,10 @@ connect() failed
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
         local mgr = redis_mux.new({
+            host = redis_host,
             port = redis_port,
             failure_mode = "reconnect",
             reconnect_max_retries = 3,
@@ -165,6 +169,7 @@ connect() failed
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
         -- Bad connect first
         local mgr = redis_mux.new({
@@ -175,7 +180,7 @@ connect() failed
         mgr:connect()
 
         -- Reconfigure and reconnect
-        mgr:set_option("host", "127.0.0.1")
+        mgr:set_option("host", redis_host)
         mgr:set_option("port", redis_port)
         local ok, err = mgr:connect()
         ngx.say("reconnect ok: " .. tostring(ok))
@@ -201,9 +206,11 @@ connect() failed
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
         local callback_set = false
         local mgr = redis_mux.new({
+            host = redis_host,
             port = redis_port,
             failure_mode = "callback",
             on_reconnect = function(m)
@@ -248,8 +255,10 @@ requires on_reconnect: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
         local mgr = redis_mux.new({
+            host = redis_host,
             port = redis_port,
             failure_mode = "reconnect",
             reconnect_max_retries = 3,

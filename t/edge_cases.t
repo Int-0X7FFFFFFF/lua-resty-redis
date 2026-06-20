@@ -15,8 +15,9 @@ __DATA__
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -41,8 +42,9 @@ f2: v2
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -66,8 +68,9 @@ b: 2
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -93,8 +96,9 @@ y: 20
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -120,8 +124,9 @@ prefix consumed: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, capacity = 0})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, capacity = 0})
         -- Should not error; capacity should be clamped to 1
         local ok, err = mgr:connect()
         if ok then
@@ -146,8 +151,9 @@ works: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -170,8 +176,9 @@ has_err: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -197,8 +204,9 @@ ttl > 0: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         local cycles = 3
         local all_ok = true
 
@@ -231,8 +239,9 @@ cycles ok: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -260,8 +269,9 @@ vals[3]: a
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -289,8 +299,9 @@ has c: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -320,8 +331,9 @@ v3: c
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, db = 0})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, db = 0})
         local ok, err = mgr:connect()
         if ok then
             local c = mgr:get_client()
@@ -347,8 +359,9 @@ db0 get: in_db0
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         ngx.say("shutting_down (connected): " .. tostring(mgr:is_shutting_down()))
         mgr:shutdown()
@@ -364,8 +377,9 @@ shutting_down (connected): false
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 

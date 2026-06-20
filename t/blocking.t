@@ -15,8 +15,9 @@ __DATA__
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, blocking_strategy = "error"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, blocking_strategy = "error"})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -40,8 +41,9 @@ not_supported: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, blocking_strategy = "error"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, blocking_strategy = "error"})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -65,8 +67,9 @@ not_supported: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, blocking_strategy = "error"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, blocking_strategy = "error"})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -88,8 +91,9 @@ has_err: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, blocking_strategy = "error"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, blocking_strategy = "error"})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -111,8 +115,9 @@ has_err: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, blocking_strategy = "fork"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, blocking_strategy = "fork"})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -133,8 +138,9 @@ lua tcp socket read timed out
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, blocking_strategy = "fork"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, blocking_strategy = "fork"})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -154,8 +160,9 @@ lua tcp socket read timed out
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, blocking_strategy = "fork"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, blocking_strategy = "fork"})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -181,9 +188,10 @@ lua tcp socket read timed out
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
         -- default blocking_strategy is "fork"
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -204,8 +212,9 @@ lua tcp socket read timed out
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, blocking_strategy = "fork"})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, blocking_strategy = "fork"})
         mgr:connect()
         local client = mgr:get_client()
 

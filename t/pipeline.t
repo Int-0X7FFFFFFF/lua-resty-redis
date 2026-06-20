@@ -15,8 +15,9 @@ __DATA__
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -48,8 +49,9 @@ r2: hello
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -84,8 +86,9 @@ r4: v2
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -108,8 +111,9 @@ after cancel, key exists: false
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -131,8 +135,9 @@ has_err: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -172,8 +177,9 @@ all_ok: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -200,8 +206,9 @@ r2: PONG
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -234,8 +241,9 @@ r2_is_err: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 
@@ -267,8 +275,9 @@ p2[1]: a
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local client = mgr:get_client()
 

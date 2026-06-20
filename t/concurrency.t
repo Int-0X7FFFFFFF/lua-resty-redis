@@ -15,8 +15,9 @@ __DATA__
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
 
         local results = {}
@@ -55,8 +56,9 @@ t2: val2
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
 
         local threads = {}
@@ -93,8 +95,9 @@ all_ok: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
 
         local threads = {}
@@ -134,8 +137,9 @@ all_ok: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
 
         -- pre-set a known value
@@ -170,8 +174,9 @@ final value: updated_by_writer
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, capacity = 10})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, capacity = 10})
         mgr:connect()
 
         local threads = {}
@@ -208,8 +213,9 @@ success: 15/15
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port, capacity = 1})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port, capacity = 1})
         mgr:connect()
 
         local c = mgr:get_client()
@@ -231,8 +237,9 @@ capacity=1 set/get: val
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
 
         local t1 = ngx.thread.spawn(function()
@@ -278,8 +285,9 @@ hash: v
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         local c = mgr:get_client()
 

@@ -149,8 +149,9 @@ err: bad field opts.port
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         ngx.say("initial: " .. mgr:get_state())
 
         local ok, err = mgr:connect()
@@ -185,8 +186,9 @@ is_dead: false
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         local ok, err = mgr:connect()
         ngx.say("first connect: " .. tostring(ok))
 
@@ -216,8 +218,9 @@ second connect err: already connected
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
 
         local client, err = mgr:get_client()
@@ -260,8 +263,9 @@ err contains 'not connected': true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
 
         local c1 = mgr:get_client()
@@ -282,8 +286,9 @@ both tables: true
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         ngx.say("before shutdown: " .. mgr:get_state())
 
@@ -302,8 +307,9 @@ after shutdown: disconnected
     content_by_lua_block {
         local redis_mux = require "resty.redis_mux"
         local redis_port = tonumber(os.getenv("TEST_NGINX_REDIS_PORT")) or 6379
+        local redis_host = os.getenv("TEST_NGINX_REDIS_HOST") or "127.0.0.1"
 
-        local mgr = redis_mux.new({port = redis_port})
+        local mgr = redis_mux.new({host = redis_host, port = redis_port})
         mgr:connect()
         mgr:shutdown()
         ngx.say("after shutdown: " .. mgr:get_state())
