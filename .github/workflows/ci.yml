@@ -36,5 +36,6 @@ jobs:
       - name: Run tests
         env:
           TEST_NGINX_TIMEOUT: 10
+          TEST_NGINX_FAST_SHUTDOWN: 1
         run: |
           make test OPENRESTY_PREFIX=/usr/local/openresty PERL5LIB="/root/perl5/lib/perl5"
