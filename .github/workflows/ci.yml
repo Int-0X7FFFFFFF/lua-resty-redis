@@ -40,6 +40,8 @@ jobs:
           cpanm --notest Test::Nginx
 
       - name: Run tests
+        env:
+          TEST_NGINX_REDIS_HOST: redis
+          TEST_NGINX_RESOLVER: 127.0.0.11
         run: |
-          export TEST_NGINX_REDIS_HOST=$(getent hosts redis | awk '{print $1}')
           make test OPENRESTY_PREFIX=/usr/local/openresty PERL5LIB="/root/perl5/lib/perl5"

@@ -14,3 +14,7 @@ lua-resty-redis-mux-*.tar.gz
 lua-resty-redis-mux-*/*
 
 
+# Claude Code
+.claude/
+.vscode
+CLAUDE.md
