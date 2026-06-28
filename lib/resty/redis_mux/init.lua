@@ -43,7 +43,7 @@ if not ngx.semaphore or not ngx.semaphore.new then
 end
 
 local _M = {}
-_M._VERSION = '0.1.0'
+_M._VERSION = '0.1.1'
 
 -- Load sub-modules
 local manager = require "resty.redis_mux.manager"
