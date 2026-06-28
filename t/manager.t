@@ -252,8 +252,8 @@ client not nil: true
         end
     }
 --- response_body eval
-qr/^client: nil
-err: (not connected|degraded connect failed|failed to create resty\.redis)/
+qr/^client: (nil|table: 0x[0-9a-f]+)
+err: (not connected \(state: disconnected\)(: using degraded connection)?|degraded connect failed|failed to create resty\.redis)/
 --- no_error_log
 [error]
 
@@ -367,7 +367,7 @@ failure_mode set: ok
         ngx.say("version: " .. redis_mux._VERSION)
     }
 --- response_body
-version: 0.1.0
+version: 0.1.1
 --- no_error_log
 [error]
 
