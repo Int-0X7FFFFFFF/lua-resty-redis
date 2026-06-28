@@ -248,12 +248,12 @@ client not nil: true
         local client, err = mgr:get_client()
         ngx.say("client: " .. tostring(client))
         if err then
-            ngx.say("err contains 'not connected': " .. tostring(err:find("not connected") ~= nil))
+            ngx.say("err: " .. err)
         end
     }
---- response_body
-client: nil
-err contains 'not connected': true
+--- response_body eval
+qr/^client: nil
+err: (not connected|degraded connect failed|failed to create resty\.redis)/
 --- no_error_log
 [error]
 

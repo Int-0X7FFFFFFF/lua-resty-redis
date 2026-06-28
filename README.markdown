@@ -3,6 +3,8 @@ Name
 
 lua-resty-redis-mux - Redis connection multiplexer for the ngx_lua cosocket API
 
+![Visitor Count](https://count.getloli.com/@lua-resty-redis-mux?name=lua-resty-redis-mux&theme=3d-num&padding=7&offset=0&align=top&scale=1&pixelated=1&darkmode=auto)
+
 Table of Contents
 =================
 
@@ -115,12 +117,12 @@ Architecture:
 
 | State | `get_client()` | `Client:command()` | Driver threads |
 |-------|---------------|-------------------|----------------|
-| `disconnected` | returns `nil, err` | N/A | not started |
-| `connecting` | returns `nil, err` | N/A | not started |
+| `disconnected` | returns degraded `resty.redis` + `err` (or `nil, err` if degraded fails) | forwarded to degraded conn | not started |
+| `connecting` | returns degraded `resty.redis` + `err` (or `nil, err` if degraded fails) | forwarded to degraded conn | not started |
 | `connected` | returns Client | enqueues to ring buffer | running |
-| `reconnecting` | returns `nil, err` | N/A | new threads after reconnect |
-| `dead` | returns `nil, err` | N/A | stopped |
-| `draining` | returns degraded `resty.redis` | forwarded to degraded conn | draining then exit |
+| `reconnecting` | returns degraded `resty.redis` + `err` (or `nil, err` if degraded fails) | forwarded to degraded conn | new threads after reconnect |
+| `dead` | returns degraded `resty.redis` + `err` (or `nil, err` if degraded fails) | forwarded to degraded conn | stopped |
+| `draining` | returns degraded `resty.redis` + `err` (or `nil, err` if degraded fails) | forwarded to degraded conn | draining then exit |
 
 Synopsis
 ========
@@ -265,8 +267,9 @@ the timer to complete.
 Returns a lightweight Client object for multiplexed Redis command execution.
 
 * In `STATE_CONNECTED`: returns a Client that shares the multiplexed connection.
-* In `STATE_DRAINING`: returns a Client backed by a degraded (direct, non-multiplexed) `resty.redis` connection.
-* In other states (`disconnected`, `reconnecting`, `dead`): returns `nil` and an error message.
+* In other states (`disconnected`, `connecting`, `reconnecting`, `dead`, `draining`): attempts to return a degraded (direct, non-multiplexed) `resty.redis` connection plus an error message describing the state. If the degraded connection also fails, returns `nil` plus the error.
+
+This ensures upstream callers always receive a usable instance when possible, even during non-optimal states.
 
 The alias `mgr:get_redis()` is also available and behaves identically.
 
@@ -475,8 +478,9 @@ TCP error detected in writeloop or readloop
                                 → reconnect or STATE_DEAD
 ```
 
-During the reconnect loop, `get_client()` returns `nil, err` for fast-fail
-rejection (no timeout buildup). Once reconnected, normal operation resumes.
+During the reconnect loop, `get_client()` attempts to return a degraded connection
+plus an error message. If the degraded connection fails, it returns `nil, err`.
+Once reconnected, normal operation resumes.
 
 Reconnection
 ============

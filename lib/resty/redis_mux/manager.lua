@@ -820,28 +820,31 @@ end
 function _M.get_client(self)
     local shared = self._shared
 
-    -- Dead state
+    -- Normal path → return multiplexed Client
+    if shared.state == STATE_CONNECTED then
+        return new_client(client_mod, shared)
+    end
+
+    -- All non-connected states: attempt degraded (direct) connection.
+    -- Always return the instance plus an error so upstream can degrade gracefully.
+    local err_msg
     if shared.state == STATE_DEAD then
-        return nil, shared.state_err or "connection dead"
+        err_msg = shared.state_err or "connection dead"
+    elseif shared.state == STATE_DRAINING then
+        err_msg = "draining: using degraded connection"
+    elseif shared.state == STATE_RECONNECTING then
+        err_msg = "reconnecting: using degraded connection"
+    else
+        err_msg = "not connected (state: " .. tostring(shared.state) .. "): using degraded connection"
     end
 
-    -- Draining → return degraded resty.redis instance (no multiplexing)
-    if shared.state == STATE_DRAINING then
-        return create_degraded_connection(shared)
+    local r, degraded_err = create_degraded_connection(shared)
+    if r then
+        return r, err_msg
     end
 
-    -- Reconnecting → reject fast, don't let client wait and timeout
-    if shared.state == STATE_RECONNECTING then
-        return nil, "reconnecting to redis..."
-    end
-
-    -- Only CONNECTED state provides normal multiplexed clients
-    if shared.state ~= STATE_CONNECTED then
-        return nil, "not connected (state: " .. tostring(shared.state) .. ")"
-    end
-
-    -- Normal path → return Client
-    return new_client(client_mod, shared)
+    -- Degraded connection also failed
+    return nil, degraded_err or err_msg
 end
 
 -- Alias
